@@ -7,8 +7,11 @@ import static com.codeborne.selenide.Selenide.$$;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import niffler.jupiter.GenerateCategory;
+import niffler.jupiter.GenerateCategoryExtension;
 import niffler.jupiter.GenerateSpend;
 import niffler.jupiter.GenerateSpendExtension;
+import niffler.model.CategoryJson;
 import niffler.model.CurrencyValues;
 import niffler.model.SpendJson;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +19,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@Disabled
+
+@ExtendWith(GenerateCategoryExtension.class)
 @ExtendWith(GenerateSpendExtension.class)
 public class SpendsWebTest {
 
@@ -24,20 +28,25 @@ public class SpendsWebTest {
         Configuration.browserSize = "1920x1080";
     }
 
+
     @BeforeEach
     void doLogin() {
         Selenide.open("http://127.0.0.1:3000/main");
         $("a[href*='redirect']").click();
-        $("input[name='username']").setValue("dima");
+        $("input[name='username']").setValue("slon");
         $("input[name='password']").setValue("12345");
         $("button[type='submit']").click();
     }
 
+    @GenerateCategory(
+            category = "Обучение",
+            username = "slon"
+    )
     @GenerateSpend(
-        username = "dima",
+        username = "slon",
         description = "QA GURU ADVANCED VOL 2",
         currency = CurrencyValues.RUB,
-        amount = 52000.00,
+        amount = 25000.00,
         category = "Обучение"
     )
     @Test
